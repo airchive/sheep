@@ -8,7 +8,19 @@ Just clone this repository.
 
 ## 🚀 Usage
 
-/
+Move to certs folder and then create your certs using the following command:
+
+```bash
+openssl req -newkey rsa:2048 -new -nodes -x509 -days 365 -keyout key.pem -out cert.pem
+```
+
+After doing that ensure that you have Node.js installed on your environment, move to the root of the project and run:
+
+```bash
+npx http-server -S -C ./certs/cert.pem -K ./certs/key.pem
+```
+
+Enjoy your calls.
 
 ## 🤝 Contributing
 Pull requests are welcome. 

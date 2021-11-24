@@ -1,28 +1,154 @@
 <!DOCTYPE html>
 
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="api/SIPml5-api.js" type="text/javascript"></script>
+    <title>SIP Client</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="api/SIPml5-api.js" type="text/javascript"></script>
-  <title>SIP Client with SIPml5 API</title>
-</head>
+  <body>
+    <h1>SIP Client with SIPml5 API</h1>
 
-<body>
-  <p>Check console logs.</p>
-  <script type="text/javascript">
-    var readyCallback = function (e) {
-      console.log('It works')
-    };
+    <p>
+      This is just a boilerplate so edit it as you wish and check logs in order
+      to see workflow.
+    </p>
 
-    var errorCallback = function (e) {
-      console.error('Failed to initialize the engine: ' + e.message);
-    }
+    <input id="called" type="text" autofocus />
+    <button id="call-button" type="button" disabled="true">Call</button>
+    <button id="hang-up-button" type="button" disabled="true">Hang Up</button>
+    <audio id="audio-remote" autoplay="autoplay" />
 
-    SIPml.init(readyCallback, errorCallback);
-  </script>
-</body>
+    <script type="module">
+      import { configs } from "./configs.js";
 
+      let sipStack;
+      let callSession;
+      let registerSession;
+      let calledElement = document.getElementById("called");
+      let callButton = document.getElementById("call-button");
+      let hangUpButtonElement = document.getElementById("hang-up-button");
+
+      function createSIPStackEventListener(event) {
+        console.info("[info]: createSIPStackEventListener logs: ");
+        console.log(event);
+
+        switch (event.type) {
+          case "starting":
+            break;
+
+          case "started":
+            register();
+            break;
+        }
+      }
+
+      function initalizeSIPStack(event) {
+        console.info("[info]: initializeSIPStack logs: ");
+        console.log(event);
+
+        createSipStack();
+      }
+
+      function errorOnInit(event) {
+        console.info("[info]: errorOnInit logs: ");
+        console.error("Failed to initialize the engine: " + event.message);
+      }
+
+      function registerEventListener(event) {
+        console.info("[info]: registerEventListener logs: ");
+        console.log(event);
+        console.log(registerSession);
+        console.log("Session Event: " + event.type);
+
+        let isClientConnected = event.type == "connected";
+        let isRegisterSessionEstablished = event.session == registerSession;
+        let isReadToCall = isClientConnected && isRegisterSessionEstablished;
+
+        if (isReadToCall) {
+          console.info("[info]: Client connected to PBX.");
+
+          callButton.addEventListener("click", makeCall);
+          callButton.disabled = false;
+        }
+      }
+
+      function register() {
+        registerSession = sipStack.newSession("register", {
+          events_listener: {
+            events: "*",
+            listener: registerEventListener,
+          },
+        });
+
+        registerSession.register();
+      }
+
+      function callEventListener(event) {
+        console.info("Session Event: " + event.type);
+      }
+
+      function makeCall() {
+        console.info("[info]: makeCall logs: ");
+
+        let called = calledElement.value;
+
+        console.log("Called: " + called);
+
+        if (!called) {
+          window.alert("Insert a valid number.");
+          return;
+        }
+
+        callSession = sipStack.newSession("call-audio", {
+          audio_remote: document.getElementById("audio-remote"),
+          events_listener: {
+            events: "*",
+            listener: callEventListener,
+          },
+        });
+
+        callSession.call(called);
+
+        hangUpButtonElement.addEventListener("click", hangUp);
+        hangUpButtonElement.disabled = false;
+      }
+
+      function hangUp() {
+        console.info("[info]: hangUp logs: ");
+
+        callSession.hangup();
+
+        hangUpButtonElement.removeEventListener("click", hangUp);
+        hangUpButtonElement.disabled = true;
+        calledElement.value = null;
+        calledElement.focus();
+      }
+
+      function createSipStack() {
+        let sip = configs.sip;
+
+        sipStack = new SIPml.Stack({
+          realm: sip.realm,
+          impi: sip.impi,
+          impu: sip.impu,
+          password: sip.password,
+          display_name: sip.display_name,
+          websocket_proxy_url: sip.websocket_proxy_url,
+          ice_servers: sip.ice_servers,
+          enable_rtcweb_breaker: sip.enable_rtcweb_breaker,
+          events_listener: {
+            events: "*",
+            listener: createSIPStackEventListener,
+          },
+        });
+      }
+
+      SIPml.init(initalizeSIPStack, errorOnInit);
+      sipStack.start();
+    </script>
+  </body>
 </html>
