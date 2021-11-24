@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="api/SIPml5-api.js" type="text/javascript"></script>
+  <title>SIP Client with SIPml5 API</title>
+</head>
+
+<body>
+  <p>Check console logs.</p>
+  <script type="text/javascript">
+    var readyCallback = function (e) {
+      console.log('It works')
+    };
+
+    var errorCallback = function (e) {
+      console.error('Failed to initialize the engine: ' + e.message);
+    }
+
+    SIPml.init(readyCallback, errorCallback);
+  </script>
+</body>
+
+</html>
