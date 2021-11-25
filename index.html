@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
     <script src="api/SIPml5-api.js" type="text/javascript"></script>
     <title>SIP Client</title>
   </head>
@@ -17,15 +18,29 @@
       to see workflow.
     </p>
 
-    <input id="called" type="text" autofocus />
-    <button id="call-button" type="button" disabled="true">Call</button>
-    <button id="hang-up-button" type="button" disabled="true">Hang Up</button>
+    <div>
+      <input id="called-input" type="text" autofocus />
+      <button id="call-button" type="button" disabled="true">Call</button>
+      <button id="hang-up-button" type="button" disabled="true" >Hang Up</button>
+    </div>
+
+    <!-- <div style="margin-top: 10px">
+      <button id="hold-button" type="button" disabled="true">Hold</button>
+      <button id="resume-button" type="button" disabled="true">Resume</button>
+    </div> -->
+
+    <div>
+      <p><i id="call-text"></i></p>
+    </div>
+
     <audio id="audio-remote" autoplay="autoplay" />
 
     <script type="module">
       import stack from "./controllers/stack.js";
-      
-      SIPml.init(stack.init.bind(stack), stack.error.bind(stack));
+
+      SIPml.init(stack.init, stack.error);
+      SIPml.setDebugLevel("info");
+
       stack.sip.start();
     </script>
   </body>

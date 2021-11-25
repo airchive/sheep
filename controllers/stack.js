@@ -1,13 +1,10 @@
-import { register } from "./register.js";
 import { configs } from "../configs.js";
+import { register } from "./register.js";
 
 class Stack {
   sip = null;
 
-  eventListener(event) {
-    console.info("[info]: stack.eventListener logs: ");
-    console.log(event);
-
+  eventListener = (event) => {
     switch (event.type) {
       case "starting":
         break;
@@ -18,7 +15,7 @@ class Stack {
     }
   }
 
-  create() {
+  create = () => {
     let conf = configs.sip;
 
     this.sip = new SIPml.Stack({
@@ -35,19 +32,13 @@ class Stack {
         listener: this.eventListener,
       },
     });
-
-    window.sip = this.sip;
   }
 
-  init(event) {
-    console.info("[info]: stack.init logs: ");
-    console.log(event);
+  init = (event) => {
     this.create();
   }
 
-  error(event) {
-    console.info("[info]: stack.error logs: ");
-    console.log(event);
+  error = (event) => {
     console.error("Failed to initialize the engine: " + event.message);
   }
 }

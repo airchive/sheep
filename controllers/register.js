@@ -1,37 +1,31 @@
-import { call } from "./call.js";
+import call from "./call.js";
+import stack from "./stack.js";
 
 class Register {
   session = null;
 
-  eventListener(event) {
-    console.info("[info]: register.eventListener logs: ");
-    console.log(event);
-    console.log(this);
-    console.log("Session Event: " + event.type);
-
+  eventListener = (event) => {
     let isClientConnected = event.type == "connected";
-    let isSessionEstablished = event.session == this;
+    let isSessionEstablished = event.session == this.session;
     let isReadToCall = isClientConnected && isSessionEstablished;
 
     if (isReadToCall) {
-      console.log("Connected to PBX.");
-
       let callButton = document.getElementById("call-button");
-      callButton.addEventListener("click", call.makeCall.bind(call));
+      
+      callButton.addEventListener("click", call.makeCall);
       callButton.disabled = false;
     }
   }
 
   init() {
-    this.sess = "blabla"
-    this.session = window.sip.newSession("register", {
+    this.session = stack.sip.newSession("register", {
       events_listener: {
         events: "*",
         listener: this.eventListener,
       },
     });
 
-    this.session.register(this);
+    this.session.register();
   }
 }
 
