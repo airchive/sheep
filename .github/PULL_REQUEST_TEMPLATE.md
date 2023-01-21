@@ -1,30 +1,22 @@
-## Pull Request
+# Pull Request
+Compile all the informations written below to send a legitimate pull request to the repository!
 
-Compile all the informations written below to send a legitimate pull request to our repository! 😊
+## Label:
 
-### 🎫 Label:
-
-#### This PR is labeled as:
+### This PR is labeled as:
 *Choose only one and remember to select the label even on the right.*
 
-- [ ] 🚀 Feature
-- [ ] 💪 Improvement
-- [ ] 📚 Documentation
-- [ ] 💀 Remove
-- [ ] 🐛 Bugfix
-- [ ] 🎉 Release
-- [ ] 🛠 Refactor
-- [ ] ✅ Test
-- [ ] 🤔 Other
+- [ ] Feature
+- [ ] Bug
+- [ ] Other
 
-### 🔗 Linked Issue
+## Linked Issue
 
-#### This PR has the following linked issues:
-
+### This PR has the following linked issues:
 - Closes #;
+- ...
 
-### 💡 Solution
+## Solution
 
-#### My solution is explained as follows:
-
+### My solution is explained as follows:
 Write your solution here...
