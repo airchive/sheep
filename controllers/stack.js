@@ -19,14 +19,15 @@ class Stack {
     let conf = configs.sip;
 
     this.sip = new SIPml.Stack({
-      realm: conf.realm,
       impi: conf.impi,
       impu: conf.impu,
+      realm: conf.realm,
       password: conf.password,
+      ice_servers: conf.ice_servers,
       display_name: conf.display_name,
       websocket_proxy_url: conf.websocket_proxy_url,
-      ice_servers: conf.ice_servers,
       enable_rtcweb_breaker: conf.enable_rtcweb_breaker,
+
       events_listener: {
         events: "*",
         listener: this.eventListener,

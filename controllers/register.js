@@ -11,7 +11,6 @@ class Register {
 
     if (isReadToCall) {
       let callButton = document.getElementById("call-button");
-      
       callButton.addEventListener("click", call.makeCall);
       callButton.disabled = false;
     }

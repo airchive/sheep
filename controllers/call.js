@@ -2,30 +2,15 @@ import stack from "./stack.js";
 
 class Call {
   session = null;
-  calledInput = document.getElementById("called-input");
   callText = document.getElementById("call-text");
   callButton = document.getElementById("call-button");
-  hangUpButton = document.getElementById("hang-up-button");
+  calledInput = document.getElementById("called-input");
   audioRemote = document.getElementById("audio-remote");
-  // holdButton = document.getElementById("hold-button");
-  // resumeButton = document.getElementById("resume-button");
+  hangUpButton = document.getElementById("hang-up-button");
 
   eventListener = (event) => {
     console.log(event);
     switch (event.type) {
-      // case "m_local_hold_ok":
-      //   this.holdButton.removeEventListener("click", this.holdCall);
-      //   this.holdButton.disabled = true;
-
-      //   this.resumeButton.addEventListener("click", this.resumeCall);
-      //   this.resumeButton.disabled = false;
-      //   break;
-
-      // case "m_local_resume_ok":
-      //   this.resumeButton.removeEventListener("click", this.resumeCall);
-      //   this.resumeButton.disabled = true;
-      //   break;
-
       case "connecting":
         this.callText.textContent = event.description;
         break;
@@ -40,13 +25,6 @@ class Call {
       case "terminated":
         this.hangUpButton.removeEventListener("click", this.hangUp);
         this.hangUpButton.disabled = true;
-
-        // this.holdButton.removeEventListener("click", this.holdCall);
-        // this.holdButton.disabled = true;
-
-        // this.resumeButton.removeEventListener("click", this.resumeCall);
-        // this.resumeButton.disabled = true;
-
         this.callText.textContent = "";
         this.calledInput.value = null;
         this.callButton.disabled = false;
@@ -63,6 +41,7 @@ class Call {
 
     this.session = stack.sip.newSession("call-audio", {
       audio_remote: this.audioRemote,
+
       events_listener: {
         events: "*",
         listener: this.eventListener,
@@ -79,14 +58,6 @@ class Call {
   hangUp = () => {
     this.session.hangup();
   }
-
-  // holdCall = () => {
-  //   this.session.hold();
-  // }
-
-  // resumeCall = () => {
-  //   this.session.resume();
-  // }
 }
 
 let call = new Call();
