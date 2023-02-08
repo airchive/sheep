@@ -1,15 +1,13 @@
 # 🪶 Sheep
-SIP client PoC written in JavaScript and sipml5 API.  
-&nbsp;
+SIP client PoC written in JavaScript and sipml5 API.
 
-## 📦 Installation  
+## 📦 Install
 Follow the steps below to make use of Sheep.
-&nbsp;
 
-1. Ensure that you have the following dependencies installed:  
-- [Node.js](https://nodejs.org/en/)  
+1. Ensure that you have the following dependencies installed:
+- [Node.js](https://nodejs.org/en/)
 
-2. Clone this repository:  
+2. Clone this repository:
 ```bash
 git clone https://github.com/airchive/sheep.git
 ```
@@ -24,23 +22,18 @@ openssl req -newkey rsa:2048 -new -nodes -x509 -days 365 -keyout key.pem -out ce
 npx http-server -S -C ./certs/cert.pem -K ./certs/key.pem
 ```
 
-5. Enjoy your calls.  
-&nbsp;
+5. Enjoy your calls.
 
-## 🤝 Contributing  
-Contributions and suggestions about how to improve this project are welcome!  
-&nbsp;  
+## 🤝 Contribute
+Contributions and suggestions about how to improve this project are welcome!
 
-## 💚 Support  
-If you want to support my work you can do it with the links below.  
+## 💚 Support
+If you want to support my work you can do it with the links below.
 
-Choose what you find more suitable for you:  
-- [Support me on GitHub](https://github.com/sponsors/Airscripts)  
-- [Support me via linktr.ee](https://linktr.ee/airscript)  
+Choose what you find more suitable for you:
+- [Support me on GitHub](https://github.com/sponsors/Airscripts)
+- [Support me via ko-fi](https://ko-fi.com/airscript)
+- [Support me via linktr.ee](https://linktr.ee/airscript)
 
-Thank you so much, it means a lot for me!  
-&nbsp;  
-
-## 💳 License  
-This repository is licensed under [GPL-3.0 License](https://github.com/airchive/sheep/blob/main/LICENSE).  
-&nbsp;
+## 💳 License
+This repository is licensed under [GPL-3.0 License](https://github.com/airchive/sheep/blob/main/LICENSE).
